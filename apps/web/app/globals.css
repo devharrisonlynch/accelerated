@@ -1,0 +1,91 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body {
+  background: #0a0a0b;
+  color: #e8e8ee;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Warm grain + grid backdrop shared by every page */
+.bg-trench {
+  background-color: #0a0a0b;
+  background-image:
+    radial-gradient(1200px 600px at 80% -10%, rgba(249, 115, 22, 0.10), transparent 60%),
+    radial-gradient(900px 500px at 0% 0%, rgba(249, 115, 22, 0.06), transparent 55%),
+    linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+  background-size: auto, auto, 44px 44px, 44px 44px;
+}
+
+@layer components {
+  .panel {
+    @apply rounded-xl border border-white/5 bg-ink-800/70 backdrop-blur-sm;
+  }
+  .panel-pad {
+    @apply panel p-4;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-xs font-medium;
+  }
+  .stat-num {
+    @apply font-mono tabular-nums tracking-tight;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold transition-all duration-150 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40;
+  }
+  .btn-brew {
+    @apply btn text-ink;
+    background-image: linear-gradient(135deg, #fb923c 0%, #f97316 100%);
+  }
+  .btn-ghost {
+    @apply btn border border-white/10 bg-white/5 text-white hover:bg-white/10;
+  }
+  .btn-long {
+    @apply btn bg-long/15 text-long ring-1 ring-inset ring-long/30 hover:bg-long/25;
+  }
+  .btn-short {
+    @apply btn bg-short/15 text-short ring-1 ring-inset ring-short/30 hover:bg-short/25;
+  }
+  .gradient-text {
+    @apply bg-brew-gradient bg-clip-text text-transparent;
+  }
+}
+
+/* Range input theming for the leverage slider */
+input[type='range'].lev {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, #fb923c, #f97316);
+}
+input[type='range'].lev::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 18px;
+  width: 18px;
+  border-radius: 9999px;
+  background: #0a0a0b;
+  border: 2px solid #f97316;
+  box-shadow: 0 0 16px -2px rgba(249, 115, 22, 0.85);
+  cursor: pointer;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: #2a2a33;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
