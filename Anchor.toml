@@ -1,0 +1,30 @@
+[toolchain]
+anchor_version = "0.30.1"
+solana_version = "1.18.17"
+
+[features]
+resolution = true
+skip-lint = false
+
+[programs.localnet]
+accelerated = "ACCELeRAtedPRPxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+[programs.devnet]
+accelerated = "ACCELeRAtedPRPxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+[registry]
+url = "https://api.apr.dev"
+
+[provider]
+cluster = "Localnet"
+wallet = "~/.config/solana/id.json"
+
+[scripts]
+test = "pnpm tsx --test tests/**/*.test.ts"
+
+[test.validator]
+url = "https://api.devnet.solana.com"
+
+[[test.validator.clone]]
+# Pyth USDC/USD price account (cloned from devnet for realistic oracle tests)
+address = "5SSkXsEKQepHHAewytPVwdej4epN1nxgLVM84L4KXgy7"
