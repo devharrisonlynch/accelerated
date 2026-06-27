@@ -1,0 +1,41 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Builds
+dist/
+.next/
+out/
+build/
+.turbo/
+
+# Anchor / Solana
+target/
+test-ledger/
+.anchor/
+**/*.rs.bk
+keypairs/
+*.so
+
+# Env & secrets
+.env
+.env.*
+!.env.example
+wallet.json
+id.json
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Coverage
+coverage/
+
+# Editor / OS
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
