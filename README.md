@@ -14,7 +14,6 @@ oracle-priced margin engine instead of fragmented AMM pools.
 [![Solana](https://img.shields.io/badge/solana-1.18-9945FF?style=flat-square&logo=solana&logoColor=white)](#)
 [![License](https://img.shields.io/badge/license-AGPL--3.0-f97316?style=flat-square)](LICENSE)
 [![Discord](https://img.shields.io/badge/discord-join-5865f2?style=flat-square&logo=discord&logoColor=white)](#)
-[![Twitter](https://img.shields.io/badge/follow-@acceleratedfi-1d9bf0?style=flat-square&logo=x&logoColor=white)](#)
 
 [**Website**](#) · [**Docs**](docs/) · [**App**](apps/web) · [**Whitepaper**](docs/whitepaper.md) · [**Risk Engine**](docs/risk-engine.md)
 
