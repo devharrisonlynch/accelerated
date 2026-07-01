@@ -5,8 +5,8 @@
 ### Leverage the trenches. Every coin. Up to 5×.
 
 **Accelerated** is a permissionless perpetual-futures layer for the long tail of Solana memecoins.
-It lets *any* token that has graduated on Pump.fun be leverage-traded up to **5×** — regardless of
-market cap, liquidity, or how degenerate the chart looks — by routing risk through a unified,
+It lets *any* token that has graduated on Pump.fun be leverage-traded up to **5×**, regardless of
+market cap, liquidity, or how degenerate the chart looks, by routing risk through a unified,
 oracle-priced margin engine instead of fragmented AMM pools.
 
 [![Build](https://img.shields.io/badge/build-passing-f97316?style=flat-square&logo=githubactions&logoColor=white)](#)
@@ -31,11 +31,11 @@ oracle-priced margin engine instead of fragmented AMM pools.
 
 <div align="center">
 
-<img src="docs/assets/3.png" alt="Accelerated — move fast, trade meme token perps" width="900" />
+<img src="docs/assets/3.png" alt="Accelerated: move fast, trade meme token perps" width="900" />
 
-<img src="docs/assets/1.png" alt="Accelerated — analytics & market intelligence" width="900" />
+<img src="docs/assets/1.png" alt="Accelerated: analytics & market intelligence" width="900" />
 
-<img src="docs/assets/2.png" alt="Accelerated — manage positions with speed and control" width="900" />
+<img src="docs/assets/2.png" alt="Accelerated: manage positions with speed and control" width="900" />
 
 </div>
 
@@ -43,7 +43,7 @@ oracle-priced margin engine instead of fragmented AMM pools.
 
 ## Why Accelerated
 
-The "trenches" — the firehose of freshly-graduated Pump.fun coins — generate enormous spot volume
+The "trenches", the firehose of freshly-graduated Pump.fun coins, generate enormous spot volume
 but have **no derivatives layer**. You can't short the obvious rug. You can't lever a conviction
 play. Liquidity is too thin and too short-lived for a traditional order book or a Drift-style vAMM
 to bootstrap a market per token.
@@ -66,14 +66,32 @@ graduates.
 
 | | |
 |---|---|
-| ⚡ **Instant markets** | Any graduated Pump.fun mint becomes tradable in a single transaction — no per-market liquidity bootstrap. |
+| ⚡ **Instant markets** | Any graduated Pump.fun mint becomes tradable in a single transaction, with no per-market liquidity bootstrap. |
 | 🎯 **Up to 5× leverage** | Isolated or cross margin, long or short, on coins from $30K to $300M FDV. |
 | 🛡️ **Shared ALP vault** | One delta-neutral-ish liquidity pool underwrites every market and earns funding + liquidation fees. |
 | 📈 **Manipulation-resistant pricing** | Confidence-weighted TWAP oracle with circuit breakers; thin coins get tighter caps automatically. |
 | 🧮 **Dynamic risk engine** | Per-market leverage caps, position limits, and maintenance margin scale with on-chain liquidity depth. |
 | 💸 **Funding rate** | Continuous funding keeps perp price anchored to spot and pays the vault. |
 | 🤖 **Keeper network** | Permissionless liquidators and funding crankers earn protocol-paid bounties. |
-| 🪙 **No new token required** | Collateral and settlement in USDC. Markets reference existing SPL mints. |
+| 🪙 **$ACC fee rail** | Collateral and PnL settle in USDC, while platform fees are designed to be paid in `$ACC` through a planned Pump.fun collaboration. |
+
+## Liquidity backstop
+
+Accelerated routes protocol fees and developer allocation into **ALP**, the Accelerated Liquidity
+Provider, as a reserve layer for market liquidity and solvency. ALP is designed to support the
+vault in the unlikely event that **ADL** (Auto-Deleveraging) cannot fully resolve an underwater
+position, while also supplying liquidity to the order book as more flow is onboarded to the
+platform.
+
+This structure is modeled after Hyperliquid's protocol vault approach, where protocol-owned
+liquidity can market make, participate in liquidations, and accrue trading fees through HLP. See
+Hyperliquid's docs on [protocol vaults](https://hyperliquid.gitbook.io/hyperliquid-docs/hypercore/vaults/protocol-vaults)
+and [auto-deleveraging](https://hyperliquid.gitbook.io/hyperliquid-docs/trading/auto-deleveraging)
+for the reference design.
+
+The platform fee asset is planned to be `$ACC` (Accelerated). Accelerated intends to coordinate with
+Pump.fun around the Accelerated token so the fee rail, developer allocation, and ALP liquidity
+backstop are aligned from launch.
 
 ## Architecture
 
@@ -82,13 +100,13 @@ terminal in **Next.js**, and everything is wired together by a typed **TypeScrip
 
 ```
 accelerated/
-├── programs/accelerated/      # Anchor program — markets, vault, margin, liquidation
+├── programs/accelerated/      # Anchor program: markets, vault, margin, liquidation
 │   └── src/
 │       ├── instructions/     # initialize_market, open_position, close_position, liquidate …
 │       ├── state/            # Market, Position, Vault, OracleConfig
 │       └── utils/            # fixed-point math, funding, margin checks
 ├── packages/
-│   ├── sdk/                  # Typed client — build & send instructions, decode accounts
+│   ├── sdk/                  # Typed client: build & send instructions, decode accounts
 │   └── risk-engine/          # Off-chain risk simulator & leverage-cap calculator
 ├── apps/web/                 # Next.js 14 trading terminal (App Router + Tailwind)
 └── docs/                     # Whitepaper, risk model, oracle design, threat model
@@ -96,12 +114,12 @@ accelerated/
 
 ### How a trade flows
 
-1. **Quote** — the SDK pulls the market's oracle price + funding and computes entry, fees, and the
+1. **Quote**: the SDK pulls the market's oracle price + funding and computes entry, fees, and the
    liquidation price for the requested size and leverage.
-2. **Open** — `open_position` transfers USDC collateral into the vault, mints a `Position` PDA, and
+2. **Open**: `open_position` transfers USDC collateral into the vault, mints a `Position` PDA, and
    records entry price/size against the market's open-interest caps.
-3. **Mark** — keepers crank funding each hour; unrealized PnL is marked against the latest TWAP.
-4. **Close / Liquidate** — `close_position` settles PnL from the vault; if margin ratio falls below
+3. **Mark**: keepers crank funding each hour; unrealized PnL is marked against the latest TWAP.
+4. **Close / Liquidate**: `close_position` settles PnL from the vault; if margin ratio falls below
    maintenance, any keeper can call `liquidate` and collect a bounty.
 
 See [`docs/architecture.md`](docs/architecture.md) for the full sequence diagrams.
@@ -132,7 +150,7 @@ pnpm seed:markets       # creates a handful of mock graduated coins
 
 ## Leverage & risk parameters
 
-Leverage is **not** a flat 5× everywhere — the risk engine scales the cap to each coin's on-chain
+Leverage is **not** a flat 5× everywhere; the risk engine scales the cap to each coin's on-chain
 depth so the vault is never on the wrong side of an un-hedgeable position.
 
 | Tier | Liquidity (graduated AMM) | Max leverage | Maint. margin | Max position |
@@ -201,4 +219,4 @@ Backing Accelerated.
 
 ## License
 
-[AGPL-3.0](LICENSE) © Accelerated contributors. This is research software — see the warning above.
+[AGPL-3.0](LICENSE) © Accelerated contributors. This is research software; see the warning above.
